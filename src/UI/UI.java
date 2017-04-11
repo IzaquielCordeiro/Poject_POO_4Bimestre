@@ -1,9 +1,16 @@
 package UI;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 import ClassesBD.candidato;
 import ClassesBD.partido;
+import DAO.CandidatoDAO;
 
 public class UI {
 	
@@ -67,12 +74,69 @@ public class UI {
 		
 		if(opcao==1){
 			limparTela();
-			menuBuscarClasseArquivo();
+			try {
+				menuBuscarClasseArquivo();
+			} catch (IOException e) {
+				System.out.println("Erro inesperado no arquivo");
+			}
 		}
 		else
 			if(opcao==2){
 				limparTela();
 				menuBuscarClasseInterface();
+			}
+			else{
+				limparTela();
+				System.out.println("Vc digitou uma opcao errada!");
+			}
+	}
+
+	private static void menuBuscarClasseArquivo() throws IOException{
+		limparTela();
+		
+		System.out.println("1 - Buscar Candidato");
+		System.out.println("2 - Buscar Partido");
+		
+		Scanner opcaoSC = new Scanner(System.in);
+		
+		int opcao = opcaoSC.nextInt();
+		
+		if(opcao==1){
+			limparTela();
+			
+			candidato Candidato = new candidato();
+			
+			System.out.println("Digite o caminho do arquivo:");
+			String caminhoArquivo = opcaoSC.nextLine();
+			
+			InputStream is = new FileInputStream(caminhoArquivo);
+			InputStreamReader isr = new InputStreamReader(is);
+			BufferedReader br = new BufferedReader(isr);
+
+			Candidato.setCpf(Integer.parseInt(br.readLine()));
+			
+			br.close();
+			
+			CandidatoDAO.bus(Candidato);
+		}
+		else
+			if(opcao==2){
+				limparTela();
+				
+				partido Partido = new partido();
+				
+				System.out.println("Digite o caminho do arquivo:");
+				String caminhoArquivo = opcaoSC.nextLine();
+				
+				InputStream is = new FileInputStream(caminhoArquivo);
+				InputStreamReader isr = new InputStreamReader(is);
+				BufferedReader br = new BufferedReader(isr);
+				
+				Partido.setCnpj(Integer.parseInt(br.readLine()));
+				
+				br.close();
+				
+				PartidoDAO.bus(Partido);
 			}
 			else{
 				limparTela();
@@ -127,7 +191,11 @@ public class UI {
 		
 		if(opcao==1){
 			limparTela();
-			menuRemoverClasseArquivo();
+			try {
+				menuRemoverClasseArquivo();
+			} catch (IOException e) {
+				System.out.println("Erro inesperado no arquivo");
+			}
 		}
 		else
 			if(opcao==2){
@@ -140,7 +208,62 @@ public class UI {
 			}
 	}
 
+	private static void menuRemoverClasseArquivo() throws IOException{
+		limparTela();
+		
+		System.out.println("1 - Remover Candidato");
+		System.out.println("2 - Remover Partido");
+		
+		Scanner opcaoSC = new Scanner(System.in);
+		
+		int opcao = opcaoSC.nextInt();
+		
+		if(opcao==1){
+			limparTela();
+			
+			candidato Candidato = new candidato();
+			
+			System.out.println("Digite o caminho do arquivo:");
+			String caminhoArquivo = opcaoSC.nextLine();
+			
+			InputStream is = new FileInputStream(caminhoArquivo);
+			InputStreamReader isr = new InputStreamReader(is);
+			BufferedReader br = new BufferedReader(isr);
+
+			Candidato.setCpf(Integer.parseInt(br.readLine()));
+			
+			br.close();
+			
+			CandidatoDAO.rm(Candidato);
+		}
+		else
+			if(opcao==2){
+				limparTela();
+				
+				partido Partido = new partido();
+				
+				System.out.println("Digite o caminho do arquivo:");
+				String caminhoArquivo = opcaoSC.nextLine();
+				
+				InputStream is = new FileInputStream(caminhoArquivo);
+				InputStreamReader isr = new InputStreamReader(is);
+				BufferedReader br = new BufferedReader(isr);
+				
+				Partido.setCnpj(Integer.parseInt(br.readLine()));
+				
+				br.close();
+				
+				PartidoDAO.rm(Partido);
+			}
+			else{
+				limparTela();
+				System.out.println("Vc digitou uma opcao errada!");
+			}
+	}
+
 	private static void menuRemoverClasseInterface(){
+		limparTela();
+		
 		System.out.println("1 - Remover Candidato");
 		System.out.println("2 - Remover Partido");
 		
@@ -187,7 +310,11 @@ public class UI {
 		
 		if(opcao==1){
 			limparTela();
-			menuAdicionarClasseArquivo();
+			try {
+				menuAdicionarClasseArquivo();
+			} catch (IOException e) {
+				System.out.println("Erro inesperado no arquivo");
+			}
 		}
 		else
 			if(opcao==2){
@@ -200,7 +327,68 @@ public class UI {
 			}
 	}
 
+	private static void menuAdicionarClasseArquivo() throws IOException{
+		limparTela();
+		
+		System.out.println("1 - Adicionar Candidato");
+		System.out.println("2 - Adicionar Partido");
+		
+		Scanner opcaoSC = new Scanner(System.in);
+		
+		int opcao = opcaoSC.nextInt();
+		
+		if(opcao==1){
+			limparTela();
+			
+			candidato Candidato = new candidato();
+			
+			System.out.println("Digite o caminho do arquivo:");
+			String caminhoArquivo = opcaoSC.nextLine();
+			
+			InputStream is = new FileInputStream(caminhoArquivo);
+			InputStreamReader isr = new InputStreamReader(is);
+			BufferedReader br = new BufferedReader(isr);
+
+			Candidato.setNome(br.readLine());
+			
+			Candidato.setCpf(Integer.parseInt(br.readLine()));
+			
+			Candidato.setDataNascimento(Integer.parseInt(br.readLine()));
+			
+			br.close();
+			
+			CandidatoDAO.add(Candidato);
+		}
+		else
+			if(opcao==2){
+				limparTela();
+				
+				partido Partido = new partido();
+				
+				System.out.println("Digite o caminho do arquivo:");
+				String caminhoArquivo = opcaoSC.nextLine();
+				
+				InputStream is = new FileInputStream(caminhoArquivo);
+				InputStreamReader isr = new InputStreamReader(is);
+				BufferedReader br = new BufferedReader(isr);
+
+				Partido.setNome(br.readLine());
+				
+				Partido.setCnpj(Integer.parseInt(br.readLine()));
+				
+				br.close();
+				
+				PartidoDAO.add(Partido);
+			}
+			else{
+				limparTela();
+				System.out.println("Vc digitou uma opcao errada!");
+			}
+	}
+
 	private static void menuAdiconarClasseInterface(){
+		limparTela();
+		
 		System.out.println("1 - Adicionar Candidato");
 		System.out.println("2 - Adicionar Partido");
 		
