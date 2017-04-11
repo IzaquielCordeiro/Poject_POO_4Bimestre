@@ -55,6 +55,126 @@ public class UI {
 		}
 	}
 	
+	private static void menuBuscarClasse(){
+		limparTela();
+		
+		System.out.println("1 - Buscar por Arquivo");
+		System.out.println("2 - Buscar por Interface");
+		
+		Scanner opcaoSC = new Scanner(System.in);
+		
+		int opcao = opcaoSC.nextInt();
+		
+		if(opcao==1){
+			limparTela();
+			menuBuscarClasseArquivo();
+		}
+		else
+			if(opcao==2){
+				limparTela();
+				menuBuscarClasseInterface();
+			}
+			else{
+				limparTela();
+				System.out.println("Vc digitou uma opcao errada!");
+			}
+	}
+
+	private static void menuBuscarClasseInterface(){
+		System.out.println("1 - Buscar Candidato");
+		System.out.println("2 - Buscar Partido");
+		
+		Scanner opcaoSC = new Scanner(System.in);
+		
+		int opcao = opcaoSC.nextInt();
+		
+		if(opcao==1){
+			limparTela();
+			
+			candidato Candidato = new candidato();
+			
+			System.out.println("Digite o cpf:");
+			Candidato.setCpf(opcaoSC.nextInt());
+			
+			CandidatoDAO.bus(Candidato);
+		}
+		else
+			if(opcao==2){
+				limparTela();
+				
+				partido Partido = new partido();
+				
+				System.out.println("Digite o cnpj:");
+				Partido.setCnpj(opcaoSC.nextInt());
+				
+				PartidoDAO.bus(Partido);
+			}
+			else{
+				limparTela();
+				System.out.println("Vc digitou uma opcao errada!");
+			}
+	}
+
+	private static void menuRemoverClasse(){
+		limparTela();
+		
+		System.out.println("1 - Remover por Arquivo");
+		System.out.println("2 - Remover por Interface");
+		
+		Scanner opcaoSC = new Scanner(System.in);
+		
+		int opcao = opcaoSC.nextInt();
+		
+		if(opcao==1){
+			limparTela();
+			menuRemoverClasseArquivo();
+		}
+		else
+			if(opcao==2){
+				limparTela();
+				menuRemoverClasseInterface();
+			}
+			else{
+				limparTela();
+				System.out.println("Vc digitou uma opcao errada!");
+			}
+	}
+
+	private static void menuRemoverClasseInterface(){
+		System.out.println("1 - Remover Candidato");
+		System.out.println("2 - Remover Partido");
+		
+		Scanner opcaoSC = new Scanner(System.in);
+		
+		int opcao = opcaoSC.nextInt();
+		
+		if(opcao==1){
+			limparTela();
+			
+			candidato Candidato = new candidato();
+			
+			System.out.println("Digite o cpf:");
+			Candidato.setCpf(opcaoSC.nextInt());
+			
+			CandidatoDAO.rm(Candidato);
+		}
+		else
+			if(opcao==2){
+				limparTela();
+				
+				partido Partido = new partido();
+				
+				System.out.println("Digite o cnpj:");
+				Partido.setCnpj(opcaoSC.nextInt());
+				
+				PartidoDAO.rm(Partido);
+			}
+			else{
+				limparTela();
+				System.out.println("Vc digitou uma opcao errada!");
+			}
+	}
+
 	public static void menuAdicionarClasse(){
 		limparTela();
 		
@@ -72,7 +192,7 @@ public class UI {
 		else
 			if(opcao==2){
 				limparTela();
-				menuRemoverClasseInterface();
+				menuAdiconarClasseInterface();
 			}
 			else{
 				limparTela();
@@ -80,7 +200,7 @@ public class UI {
 			}
 	}
 
-	private static void menuRemoverClasseInterface(){
+	private static void menuAdiconarClasseInterface(){
 		System.out.println("1 - Adicionar Candidato");
 		System.out.println("2 - Adicionar Partido");
 		
