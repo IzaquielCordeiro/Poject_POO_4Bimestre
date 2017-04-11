@@ -1,3 +1,5 @@
+package ClassesBD;
+
 public class candidato {
 	private int cpf;
 	private int dataNascimento;

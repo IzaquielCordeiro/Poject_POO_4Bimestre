@@ -1,3 +1,5 @@
+package ClassesBD;
+
 public class modificaLei {
 
 	private int data;

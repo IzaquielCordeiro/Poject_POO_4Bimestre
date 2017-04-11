@@ -1,3 +1,5 @@
+package ClassesBD;
+
 public class comeca {
 	private int idObra;
 	private int data;

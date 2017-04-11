@@ -1,3 +1,5 @@
+package ClassesBD;
+
 public class fiscalizaPresidenteSenador {
 	private int cpfPresidente;
 	private int data;

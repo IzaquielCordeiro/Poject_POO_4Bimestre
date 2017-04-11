@@ -1,3 +1,5 @@
+package ClassesBD;
+
 public class fiscalizaPrefeitoVereador {
 	private int cpfPrefeito;
 	private int data;

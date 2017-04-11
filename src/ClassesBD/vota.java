@@ -1,3 +1,5 @@
+package ClassesBD;
+
 public class vota {
 	private int cpfCandidato;
 	private int data;

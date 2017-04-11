@@ -1,3 +1,5 @@
+package ClassesBD;
+
 public class governador {
 	public int getInicioMandato() {
 		return inicioMandato;

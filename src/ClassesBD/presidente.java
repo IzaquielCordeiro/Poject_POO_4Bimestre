@@ -1,3 +1,5 @@
+package ClassesBD;
+
 public class presidente {
   private int inicioMandato;
   private int cpf;

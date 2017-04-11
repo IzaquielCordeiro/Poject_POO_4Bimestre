@@ -1,5 +1,7 @@
+package ClassesBD;
+
 public class partido {
-  private int cnpj;
+	private int cnpj;
 	private String nome;
 
 	public int getCnpj() {

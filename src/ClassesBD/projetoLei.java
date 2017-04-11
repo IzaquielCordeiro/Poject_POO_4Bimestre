@@ -1,3 +1,5 @@
+package ClassesBD;
+
 public class projetoLei {
 	private int id;
 	private int cpfSanciona;

@@ -1,3 +1,5 @@
+package ClassesBD;
+
 public class senador {
 	private int inicioMandato;
 	private int cpf;
