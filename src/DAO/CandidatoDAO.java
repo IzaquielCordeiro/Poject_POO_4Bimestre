@@ -28,7 +28,8 @@ public class CandidatoDAO{
 			
 			stmt.execute();
 			stmt.close();
-
+			
+			System.out.println("Candidato adicionado com sucesso!");
 		} catch(SQLException erro){
 			System.out.println("Erro de conexão com o banco!");
 		}
@@ -45,7 +46,8 @@ public class CandidatoDAO{
 			
 			stmt.execute();
 			stmt.close();
-
+			
+			System.out.println("Candidato removido com sucesso!");
 		} catch(SQLException erro){
 			System.out.println("Erro de conexão com o banco!");
 		}

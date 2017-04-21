@@ -21,13 +21,21 @@ import DAO.PartidoDAO;
 public class UI {
 	
 	public static void main(String[] args) throws SQLException, ParseException, ClassNotFoundException {
-		CandidatoDAO.abrir();
-		PartidoDAO.abrir();
-		
-		menuPrincipal();
-		
-		CandidatoDAO.fechar();
-		PartidoDAO.fechar();
+		try{
+			CandidatoDAO.abrir();
+			PartidoDAO.abrir();
+			
+			menuPrincipal();
+			
+			try{
+				CandidatoDAO.fechar();
+				PartidoDAO.fechar();
+			}catch(Exception e){
+				System.out.println("Erro ao fechar conexão com o banco");
+			}
+		}catch(Exception e){
+			System.out.println("Erro ao abrir conexão com o banco");
+		}
 	}
 	
 
@@ -92,7 +100,7 @@ public class UI {
 			try {
 				menuBuscarClasseArquivo();
 			} catch (IOException e) {
-				System.out.println("Erro inesperado no arquivo");
+				System.out.println("Erro na leitura do arquivo");
 			}
 		}
 		else
@@ -128,16 +136,32 @@ public class UI {
 			InputStream is = new FileInputStream(caminhoArquivo);
 			InputStreamReader isr = new InputStreamReader(is);
 			BufferedReader br = new BufferedReader(isr);
-
-			Candidato.setCpf(Integer.parseInt(br.readLine()));
+			
+			try{
+				Candidato.setCpf(Integer.parseInt(br.readLine()));
+			}  catch(Exception e){
+				System.out.println("Erro no formato do cpf!");
+				br.close();
+				
+				return;
+			}
 			
 			br.close();
 			
 			candidato CandidatoS = CandidatoDAO.bus(Candidato);
 			
-			System.out.println("Nome: " + CandidatoS.getNome());
-			System.out.println("CPF: " + CandidatoS.getCpf());
-			System.out.println("Data Nascimento: " + CandidatoS.getDataNascimento().toString());
+			if(CandidatoS!=null){
+				System.out.println("Nome: " + CandidatoS.getNome());
+				System.out.println("CPF: " + CandidatoS.getCpf());
+				
+				try{
+					System.out.println("Data Nascimento: " + CandidatoS.getDataNascimento().toString());
+				} catch(Exception e){
+					System.out.println("Data Nascimento: null");
+				}
+			} else{
+				System.out.println("Candidato não encontrado!");
+			}
 		}
 		else
 			if(opcao==2){
@@ -152,14 +176,25 @@ public class UI {
 				InputStreamReader isr = new InputStreamReader(is);
 				BufferedReader br = new BufferedReader(isr);
 				
-				Partido.setCnpj(Integer.parseInt(br.readLine()));
+				try{
+					Partido.setCnpj(Integer.parseInt(br.readLine()));
+				}  catch(Exception e){
+					System.out.println("Erro no formato do cnpj!");
+					br.close();
+					
+					return;
+				}
 				
 				br.close();
 				
 				partido PartidoS = PartidoDAO.bus(Partido);
 				
-				System.out.println("Nome: " + PartidoS.getNome());
-				System.out.println("CNPJ: " + PartidoS.getCnpj());
+				if(PartidoS!=null){
+					System.out.println("Nome: " + PartidoS.getNome());
+					System.out.println("CNPJ: " + PartidoS.getCnpj());
+				} else{
+					System.out.println("Partido não encontrado!");
+				}
 			}
 			else{
 				limparTela();
@@ -182,14 +217,29 @@ public class UI {
 			candidato Candidato = new candidato();
 			
 			System.out.println("Digite o cpf:");
-			Candidato.setCpf(opcaoSC.nextInt());
-			opcaoSC.nextLine();
+			try{
+				Candidato.setCpf(opcaoSC.nextInt());
+				opcaoSC.nextLine();
+			}  catch(Exception e){
+				System.out.println("Erro no formato do cpf!");
+				
+				return;
+			}
 			
 			candidato CandidatoS = CandidatoDAO.bus(Candidato);
 			
-			System.out.println("Nome: " + CandidatoS.getNome());
-			System.out.println("CPF: " + CandidatoS.getCpf());
-			System.out.println("Data Nascimento: " + CandidatoS.getDataNascimento().toString());
+			if(CandidatoS!=null){
+				System.out.println("Nome: " + CandidatoS.getNome());
+				System.out.println("CPF: " + CandidatoS.getCpf());
+				
+				try{
+					System.out.println("Data Nascimento: " + CandidatoS.getDataNascimento().toString());
+				} catch(Exception e){
+					System.out.println("Data Nascimento: null");
+				}
+			} else{
+				System.out.println("Candidato não encontrado!");
+			}
 		}
 		else
 			if(opcao==2){
@@ -198,13 +248,24 @@ public class UI {
 				partido Partido = new partido();
 				
 				System.out.println("Digite o cnpj:");
-				Partido.setCnpj(opcaoSC.nextInt());
-				opcaoSC.nextLine();
+				
+				try{
+					Partido.setCnpj(opcaoSC.nextInt());
+					opcaoSC.nextLine();
+				}  catch(Exception e){
+					System.out.println("Erro no formato do cnpj!");
+					
+					return;
+				}
 				
 				partido PartidoS = PartidoDAO.bus(Partido);
 				
-				System.out.println("Nome: " + PartidoS.getNome());
-				System.out.println("CNPJ: " + PartidoS.getCnpj());
+				if(PartidoS!=null){
+					System.out.println("Nome: " + PartidoS.getNome());
+					System.out.println("CNPJ: " + PartidoS.getCnpj());
+				} else{
+					System.out.println("Partido não encontrado!");
+				}
 			}
 			else{
 				limparTela();
@@ -225,10 +286,11 @@ public class UI {
 		
 		if(opcao==1){
 			limparTela();
+			
 			try {
 				menuRemoverClasseArquivo();
 			} catch (IOException e) {
-				System.out.println("Erro inesperado no arquivo");
+				System.out.println("Erro na leitura do arquivo");
 			}
 		}
 		else
@@ -264,9 +326,15 @@ public class UI {
 			InputStream is = new FileInputStream(caminhoArquivo);
 			InputStreamReader isr = new InputStreamReader(is);
 			BufferedReader br = new BufferedReader(isr);
-
-			Candidato.setCpf(Integer.parseInt(br.readLine()));
 			
+			try{
+				Candidato.setCpf(Integer.parseInt(br.readLine()));
+			}  catch(Exception e){
+				System.out.println("Erro no formato do cpf!");
+				br.close();
+				
+				return;
+			}
 			br.close();
 			
 			CandidatoDAO.rm(Candidato);
@@ -284,7 +352,14 @@ public class UI {
 				InputStreamReader isr = new InputStreamReader(is);
 				BufferedReader br = new BufferedReader(isr);
 				
-				Partido.setCnpj(Integer.parseInt(br.readLine()));
+				try{
+					Partido.setCnpj(Integer.parseInt(br.readLine()));
+				} catch(Exception e){
+					System.out.println("Erro no formato do cnpj!");
+					br.close();
+					
+					return;
+				}
 				
 				br.close();
 				
@@ -312,8 +387,14 @@ public class UI {
 			candidato Candidato = new candidato();
 			
 			System.out.println("Digite o cpf:");
-			Candidato.setCpf(opcaoSC.nextInt());
-			opcaoSC.nextLine();
+			try{
+				Candidato.setCpf(opcaoSC.nextInt());
+				opcaoSC.nextLine();
+			} catch(Exception e){
+				System.out.println("Erro no formato do cpf!");
+
+				return;
+			}
 			
 			CandidatoDAO.rm(Candidato);
 		}
@@ -324,8 +405,15 @@ public class UI {
 				partido Partido = new partido();
 				
 				System.out.println("Digite o cnpj:");
-				Partido.setCnpj(opcaoSC.nextInt());
-				opcaoSC.nextLine();
+				
+				try{
+					Partido.setCnpj(opcaoSC.nextInt());
+					opcaoSC.nextLine();
+				} catch(Exception e){
+					System.out.println("Erro no formato do cnpj!");
+
+					return;
+				}
 				
 				PartidoDAO.rm(Partido);
 			}
@@ -348,10 +436,11 @@ public class UI {
 		
 		if(opcao==1){
 			limparTela();
+			
 			try {
 				menuAdicionarClasseArquivo();
 			} catch (IOException e) {
-				System.out.println("Erro inesperado no arquivo");
+				System.out.println("Erro na leitura do arquivo");
 			}
 		}
 		else
@@ -387,16 +476,27 @@ public class UI {
 			InputStream is = new FileInputStream(caminhoArquivo);
 			InputStreamReader isr = new InputStreamReader(is);
 			BufferedReader br = new BufferedReader(isr);
-
+			
+			
 			Candidato.setNome(br.readLine());
 			
-			Candidato.setCpf(Integer.parseInt(br.readLine()));
+			try{
+				Candidato.setCpf(Integer.parseInt(br.readLine()));
+			} catch(Exception e){
+				System.out.println("Erro no formato do cpf!");
+				return;
+			}
 			
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-			Date myDate = formatter.parse(br.readLine());
-			java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
-			
-			Candidato.setDataNascimento(sqlDate);	
+			try{
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				Date myDate = formatter.parse(br.readLine());
+				java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
+				
+				Candidato.setDataNascimento(sqlDate);
+			} catch(Exception e){
+				System.out.println("Erro no formato da data!");
+				Candidato.setDataNascimento(null);
+			}
 			
 			br.close();
 			
@@ -417,7 +517,13 @@ public class UI {
 
 				Partido.setNome(br.readLine());
 				
-				Partido.setCnpj(Integer.parseInt(br.readLine()));
+				try{
+					Partido.setCnpj(Integer.parseInt(br.readLine()));
+				} catch(Exception e){
+					System.out.println("Erro no formato do cnpj!");
+
+					return;
+				}
 				
 				br.close();
 				
@@ -448,16 +554,28 @@ public class UI {
 			System.out.println("Digite o nome:");
 			Candidato.setNome(opcaoSC.nextLine());
 			
-			System.out.println("Digite o cpf:");
-			Candidato.setCpf(opcaoSC.nextInt());
-			opcaoSC.nextLine();
+			try{
+				System.out.println("Digite o cpf:");
+				Candidato.setCpf(opcaoSC.nextInt());
+				opcaoSC.nextLine();
+			} catch(Exception e){
+				System.out.println("Erro no formato do cpf!");
+
+				return;
+			}
 			
-			System.out.println("Digite a data de nascimento (yyyy-MM-dd):");
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-			Date myDate = formatter.parse(opcaoSC.nextLine());
-			java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
-			
-			Candidato.setDataNascimento(sqlDate);	
+			try{
+				System.out.println("Digite a data de nascimento (yyyy-MM-dd):");
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				Date myDate = formatter.parse(opcaoSC.nextLine());
+				java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
+				
+				Candidato.setDataNascimento(sqlDate);
+			} catch(Exception e){
+				System.out.println("Erro no formato da data!");
+
+				Candidato.setDataNascimento(null);
+			}
 			
 			CandidatoDAO.add(Candidato);
 		}
@@ -471,7 +589,14 @@ public class UI {
 				Partido.setNome(opcaoSC.nextLine());
 				
 				System.out.println("Digite o cnpj:");
-				Partido.setCnpj(opcaoSC.nextInt());
+				
+				try{
+					Partido.setCnpj(opcaoSC.nextInt());
+				} catch(Exception e){
+					System.out.println("Erro no formato do cnpj!");
+
+					return;
+				}
 				
 				PartidoDAO.add(Partido);
 			}

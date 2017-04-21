@@ -27,7 +27,8 @@ public class PartidoDAO{
 				
 			stmt.execute();
 			stmt.close();
-	
+
+			System.out.println("Partido adicionado com sucesso!");
 		} catch(SQLException erro){
 				System.out.println("Erro de conex�o com o banco!");
 		}
@@ -45,6 +46,7 @@ public class PartidoDAO{
 			stmt.execute();
 			stmt.close();
 	
+			System.out.println("Partido removido com sucesso!");
 		} catch(SQLException erro){
 			System.out.println("Erro de conex�o com o banco!");
 		}
