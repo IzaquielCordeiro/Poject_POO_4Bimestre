@@ -9,76 +9,75 @@ import java.sql.SQLException;
 import ClassesBD.candidato;
 
 public class CandidatoDAO{
-		private static Connection conn;
+	private static Connection conn;
 
-		CandidatoDAO() throws SQLException{
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/BD", "root", "");
-		}
-		
-		public static void add(candidato c) throws SQLException{
-			String sql = "INSERT INTO tb_candidato (nome, data_nascimento, cpf) VALUES(?, ?, ?)";
+	public static void abrir() throws SQLException, ClassNotFoundException{
+		conn = DriverManager.getConnection("jdbc:mysql://localhost/BD", "POO", "12345678");
+	}
 	
-			try{
+	public static void add(candidato c) throws SQLException{
+		String sql = "INSERT INTO tb_candidato (nome, data_nascimento, cpf) VALUES(?, ?, ?)";
+
+		try{
+
+			PreparedStatement stmt = conn.prepareStatement(sql);
 	
-				PreparedStatement stmt = conn.prepareStatement(sql);
-		
-				stmt.setString(1, c.getNome());
-		
-				stmt.setInt(2, c.getDataNascimento());
-				stmt.setInt(3, c.getCpf());
-				
-				stmt.execute();
-		
-				stmt.close();
-	
-			} catch(SQLException erro){
-				System.out.println("Erro de conexão com o banco!");
-			}
-		}
-		
-		public static void rm(candidato c){
-			String sql = "DELETE FROM tb_candidato WHERE cpf = ?";
+			stmt.setString(1, c.getNome());
+			stmt.setDate(2, c.getDataNascimento());
+			stmt.setInt(3, c.getCpf());
 			
-			try{
-	
-				PreparedStatement stmt = conn.prepareStatement(sql);
-		
-				stmt.setInt(1, c.getCpf());
-				
-				stmt.execute();
-		
-				stmt.close();
-	
-			} catch(SQLException erro){
-				System.out.println("Erro de conexão com o banco!");
-			}
+			stmt.execute();
+			stmt.close();
+
+		} catch(SQLException erro){
+			System.out.println("Erro de conexão com o banco!");
 		}
+	}
+	
+	public static void rm(candidato c){
+		String sql = "DELETE FROM tb_candidato WHERE cpf = ?";
 		
-		public static candidato bus(candidato c){
-			String sql = "SELECT * FROM tb_candidato WHERE cpf = ?";
+		try{
+
+			PreparedStatement stmt = conn.prepareStatement(sql);
+	
+			stmt.setInt(1, c.getCpf());
 			
-			candidato Candidato = new candidato();
+			stmt.execute();
+			stmt.close();
 
-			try{
-
-				PreparedStatement stmt = conn.prepareStatement(sql);
-
-				stmt.setInt(1, c.getCpf());
-
-				ResultSet result = stmt.executeQuery();
-
-				Candidato.setCpf(result.getInt(1));
-				Candidato.setDataNascimento(result.getInt(1));
-				Candidato.setNome(result.getString(1));
-				
-			} catch(SQLException erro){
-				System.out.println("Erro de conexão com o banco!");
-			}
-
-			return Candidato;
+		} catch(SQLException erro){
+			System.out.println("Erro de conexão com o banco!");
 		}
+	}
+	
+	public static candidato bus(candidato c){
+		String sql = "SELECT * FROM tb_candidato WHERE cpf = ?";
 		
-		public static void fecharCon() throws SQLException{
-			conn.close();
+		candidato Candidato = new candidato();
+
+		try{
+
+			PreparedStatement stmt = conn.prepareStatement(sql);
+
+			stmt.setInt(1, c.getCpf());
+
+			ResultSet result = stmt.executeQuery();
+			
+			result.next();
+			
+			Candidato.setCpf(result.getInt("cpf"));
+			Candidato.setDataNascimento(result.getDate("data_nascimento"));
+			Candidato.setNome(result.getString("nome"));
+			
+		} catch(SQLException erro){
+			System.out.println("Erro de conexão com o banco!");
 		}
+
+		return Candidato;
+	}
+	
+	public static void fechar() throws SQLException{
+		conn.close();
+	}
 }

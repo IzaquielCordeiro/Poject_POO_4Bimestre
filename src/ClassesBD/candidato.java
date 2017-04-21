@@ -1,8 +1,10 @@
 package ClassesBD;
 
+import java.sql.Date;
+
 public class candidato {
 	private int cpf;
-	private int dataNascimento;
+	private Date dataNascimento;
 	private String nome;
 
 	public int getCpf() {
@@ -13,11 +15,11 @@ public class candidato {
 		this.cpf = cpf;
 	}
 
-	public int getDataNascimento() {
+	public Date getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(int dataNascimento) {
+	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 

@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 import ClassesBD.candidato;
@@ -16,8 +20,14 @@ import DAO.PartidoDAO;
 
 public class UI {
 	
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws SQLException, ParseException, ClassNotFoundException {
+		CandidatoDAO.abrir();
+		PartidoDAO.abrir();
+		
 		menuPrincipal();
+		
+		CandidatoDAO.fechar();
+		PartidoDAO.fechar();
 	}
 	
 
@@ -26,7 +36,7 @@ public class UI {
 			System.out.println();
 	}
 	
-	public static void menuPrincipal() throws SQLException{
+	public static void menuPrincipal() throws SQLException, ParseException{
 		limparTela();
 		
 		while(true){
@@ -38,6 +48,7 @@ public class UI {
 			Scanner opcaoSC = new Scanner(System.in);
 			
 			int opcao = opcaoSC.nextInt();
+			opcaoSC.nextLine();
 			
 			if(opcao==1){
 				limparTela();
@@ -74,6 +85,7 @@ public class UI {
 		Scanner opcaoSC = new Scanner(System.in);
 		
 		int opcao = opcaoSC.nextInt();
+		opcaoSC.nextLine();
 		
 		if(opcao==1){
 			limparTela();
@@ -103,6 +115,7 @@ public class UI {
 		Scanner opcaoSC = new Scanner(System.in);
 		
 		int opcao = opcaoSC.nextInt();
+		opcaoSC.nextLine();
 		
 		if(opcao==1){
 			limparTela();
@@ -120,7 +133,11 @@ public class UI {
 			
 			br.close();
 			
-			CandidatoDAO.bus(Candidato);
+			candidato CandidatoS = CandidatoDAO.bus(Candidato);
+			
+			System.out.println("Nome: " + CandidatoS.getNome());
+			System.out.println("CPF: " + CandidatoS.getCpf());
+			System.out.println("Data Nascimento: " + CandidatoS.getDataNascimento().toString());
 		}
 		else
 			if(opcao==2){
@@ -139,7 +156,10 @@ public class UI {
 				
 				br.close();
 				
-				PartidoDAO.bus(Partido);
+				partido PartidoS = PartidoDAO.bus(Partido);
+				
+				System.out.println("Nome: " + PartidoS.getNome());
+				System.out.println("CNPJ: " + PartidoS.getCnpj());
 			}
 			else{
 				limparTela();
@@ -154,6 +174,7 @@ public class UI {
 		Scanner opcaoSC = new Scanner(System.in);
 		
 		int opcao = opcaoSC.nextInt();
+		opcaoSC.nextLine();
 		
 		if(opcao==1){
 			limparTela();
@@ -162,8 +183,13 @@ public class UI {
 			
 			System.out.println("Digite o cpf:");
 			Candidato.setCpf(opcaoSC.nextInt());
+			opcaoSC.nextLine();
 			
-			CandidatoDAO.bus(Candidato);
+			candidato CandidatoS = CandidatoDAO.bus(Candidato);
+			
+			System.out.println("Nome: " + CandidatoS.getNome());
+			System.out.println("CPF: " + CandidatoS.getCpf());
+			System.out.println("Data Nascimento: " + CandidatoS.getDataNascimento().toString());
 		}
 		else
 			if(opcao==2){
@@ -173,8 +199,12 @@ public class UI {
 				
 				System.out.println("Digite o cnpj:");
 				Partido.setCnpj(opcaoSC.nextInt());
+				opcaoSC.nextLine();
 				
-				PartidoDAO.bus(Partido);
+				partido PartidoS = PartidoDAO.bus(Partido);
+				
+				System.out.println("Nome: " + PartidoS.getNome());
+				System.out.println("CNPJ: " + PartidoS.getCnpj());
 			}
 			else{
 				limparTela();
@@ -191,6 +221,7 @@ public class UI {
 		Scanner opcaoSC = new Scanner(System.in);
 		
 		int opcao = opcaoSC.nextInt();
+		opcaoSC.nextLine();
 		
 		if(opcao==1){
 			limparTela();
@@ -220,6 +251,7 @@ public class UI {
 		Scanner opcaoSC = new Scanner(System.in);
 		
 		int opcao = opcaoSC.nextInt();
+		opcaoSC.nextLine();
 		
 		if(opcao==1){
 			limparTela();
@@ -281,6 +313,7 @@ public class UI {
 			
 			System.out.println("Digite o cpf:");
 			Candidato.setCpf(opcaoSC.nextInt());
+			opcaoSC.nextLine();
 			
 			CandidatoDAO.rm(Candidato);
 		}
@@ -292,6 +325,7 @@ public class UI {
 				
 				System.out.println("Digite o cnpj:");
 				Partido.setCnpj(opcaoSC.nextInt());
+				opcaoSC.nextLine();
 				
 				PartidoDAO.rm(Partido);
 			}
@@ -301,7 +335,7 @@ public class UI {
 			}
 	}
 
-	public static void menuAdicionarClasse() throws SQLException{
+	public static void menuAdicionarClasse() throws SQLException, ParseException{
 		limparTela();
 		
 		System.out.println("1 - Adicionar por Arquivo");
@@ -310,6 +344,7 @@ public class UI {
 		Scanner opcaoSC = new Scanner(System.in);
 		
 		int opcao = opcaoSC.nextInt();
+		opcaoSC.nextLine();
 		
 		if(opcao==1){
 			limparTela();
@@ -330,7 +365,7 @@ public class UI {
 			}
 	}
 
-	private static void menuAdicionarClasseArquivo() throws IOException, SQLException{
+	private static void menuAdicionarClasseArquivo() throws IOException, SQLException, ParseException{
 		limparTela();
 		
 		System.out.println("1 - Adicionar Candidato");
@@ -339,6 +374,7 @@ public class UI {
 		Scanner opcaoSC = new Scanner(System.in);
 		
 		int opcao = opcaoSC.nextInt();
+		opcaoSC.nextLine();
 		
 		if(opcao==1){
 			limparTela();
@@ -356,7 +392,11 @@ public class UI {
 			
 			Candidato.setCpf(Integer.parseInt(br.readLine()));
 			
-			Candidato.setDataNascimento(Integer.parseInt(br.readLine()));
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			Date myDate = formatter.parse(br.readLine());
+			java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
+			
+			Candidato.setDataNascimento(sqlDate);	
 			
 			br.close();
 			
@@ -389,7 +429,7 @@ public class UI {
 			}
 	}
 
-	private static void menuAdiconarClasseInterface() throws SQLException{
+	private static void menuAdiconarClasseInterface() throws SQLException, ParseException{
 		limparTela();
 		
 		System.out.println("1 - Adicionar Candidato");
@@ -398,6 +438,7 @@ public class UI {
 		Scanner opcaoSC = new Scanner(System.in);
 		
 		int opcao = opcaoSC.nextInt();
+		opcaoSC.nextLine();
 		
 		if(opcao==1){
 			limparTela();
@@ -409,9 +450,14 @@ public class UI {
 			
 			System.out.println("Digite o cpf:");
 			Candidato.setCpf(opcaoSC.nextInt());
+			opcaoSC.nextLine();
 			
-			System.out.println("Digite a data de nascimento:");
-			Candidato.setDataNascimento(opcaoSC.nextInt());
+			System.out.println("Digite a data de nascimento (yyyy-MM-dd):");
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			Date myDate = formatter.parse(opcaoSC.nextLine());
+			java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
+			
+			Candidato.setDataNascimento(sqlDate);	
 			
 			CandidatoDAO.add(Candidato);
 		}
