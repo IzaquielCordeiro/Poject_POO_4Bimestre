@@ -6,24 +6,27 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import ClassesBD.candidato;
 import ClassesBD.partido;
 import DAO.CandidatoDAO;
+import DAO.PartidoDAO;
 
 public class UI {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		menuPrincipal();
 	}
 	
+
 	public static void limparTela(){
 		for(int i=0;i<100;i++)
 			System.out.println();
 	}
 	
-	public static void menuPrincipal(){
+	public static void menuPrincipal() throws SQLException{
 		limparTela();
 		
 		while(true){
@@ -298,7 +301,7 @@ public class UI {
 			}
 	}
 
-	public static void menuAdicionarClasse(){
+	public static void menuAdicionarClasse() throws SQLException{
 		limparTela();
 		
 		System.out.println("1 - Adicionar por Arquivo");
@@ -327,7 +330,7 @@ public class UI {
 			}
 	}
 
-	private static void menuAdicionarClasseArquivo() throws IOException{
+	private static void menuAdicionarClasseArquivo() throws IOException, SQLException{
 		limparTela();
 		
 		System.out.println("1 - Adicionar Candidato");
@@ -386,7 +389,7 @@ public class UI {
 			}
 	}
 
-	private static void menuAdiconarClasseInterface(){
+	private static void menuAdiconarClasseInterface() throws SQLException{
 		limparTela();
 		
 		System.out.println("1 - Adicionar Candidato");
