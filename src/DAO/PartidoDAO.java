@@ -11,7 +11,7 @@
 	public class PartidoDAO{
 			private static Connection conn;
 
-			partidoDAO() throws SQLException{
+			PartidoDAO() throws SQLException{
 				conn = DriverManager.getConnection("jdbc:mysql://localhost/BD", "root", "");
 			}
 			
@@ -22,10 +22,9 @@
 		
 					PreparedStatement stmt = conn.prepareStatement(sql);
 			
-					stmt.setString(1, c.getNome());
+					stmt.setLong(1, c.getCnpj());
 			
-					stmt.setInt(2, c.getDataNascimento());
-					stmt.setInt(3, c.getCpf());
+					stmt.setString(2, c.getNome());
 					
 					stmt.execute();
 			
@@ -43,7 +42,7 @@
 		
 					PreparedStatement stmt = conn.prepareStatement(sql);
 			
-					stmt.setInt(1, c.getCpf());
+					stmt.setInt(1, c.getCnpj());
 					
 					stmt.execute();
 			
@@ -63,13 +62,12 @@
 
 					PreparedStatement stmt = conn.prepareStatement(sql);
 
-					stmt.setInt(1, c.getCpf());
+					stmt.setInt(1, c.getCnpj());
 
 					ResultSet result = stmt.executeQuery();
 
-					partido.setCpf(result.getInt(1));
-					partido.setDataNascimento(result.getInt(1));
 					partido.setNome(result.getString(1));
+					partido.setCnpj(result.getInt(1));
 					
 				} catch(SQLException erro){
 					System.out.println("Erro de conexão com o banco!");
@@ -81,6 +79,6 @@
 			public static void fecharCon() throws SQLException{
 				conn.close();
 			}
-	}
-
 }
+
+
